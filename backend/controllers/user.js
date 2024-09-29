@@ -1,7 +1,7 @@
 import { User } from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import sendMail from "../middlewares/sendMail.js";
+import sendMail from "../middlewares/sendMail.js"; 
 import TryCatch from "../middlewares/TryCatch.js"; 
 
 export const register = TryCatch(async (req, res) => {
@@ -10,7 +10,7 @@ export const register = TryCatch(async (req, res) => {
     let user = await User.findOne({ email });
 
     if (user) 
-      return res.status(400).json({
+      return res.status(400).json({ 
         message: "User Already exists",
       });
 
@@ -53,7 +53,7 @@ export const register = TryCatch(async (req, res) => {
   
     const verify = jwt.verify(activationToken, process.env.Activation_Secret);
     console.log("verify: ",verify); 
-  
+   
     if (!verify)
       return res.status(400).json({
         message: "Otp Expired",
@@ -85,20 +85,26 @@ export const register = TryCatch(async (req, res) => {
         message: "No User with this email",
       }); 
   
-    const mathPassword = await bcrypt.compare(password, user.password);
+    const mathPassword = await bcrypt.compare(password, user.password); 
   
     if (!mathPassword)
       return res.status(400).json({
         message: "wrong Password",
-      });
+      }); 
    
     const token = jwt.sign({ _id: user._id }, process.env.Jwt_Sec, {
       expiresIn: "15d",  
-    });
+    }); 
   
     res.json({
       message: `Welcome back ${user.name}`,
       token,
       user,
-    });
+    }); 
   });
+
+
+  export const myProfile = TryCatch(async (req, res) => {
+    const user = await User.findById(req._id);
+    res.json({ user });
+  })

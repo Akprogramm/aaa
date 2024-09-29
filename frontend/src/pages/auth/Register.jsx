@@ -1,8 +1,16 @@
 import React, { useState } from "react";
 import "./auth.css";
 import { Link, useNavigate } from "react-router-dom";
+// import { UserData } from "../../context/UserContext";
 
 const Register = () => {
+
+  // const { Register } = UserData(); 
+
+  // const submitHandler = async (e) => {
+  //   e.preventDefault();
+  //   await Register(name, email, password, navigate); 
+  // };  
 
   return (
     <div className="auth-page">
