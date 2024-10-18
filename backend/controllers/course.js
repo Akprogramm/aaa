@@ -5,6 +5,7 @@ import { Lecture } from "../models/Lecture.js";
 import { User } from "../models/User.js";
 import crypto from "crypto";
 import { Payment } from "../models/Payment.js";
+import { instance } from "../index.js";
 
 export const getAllCourses = TryCatch(async (req, res) => {
     const courses = await Courses.find(); 
@@ -22,13 +23,13 @@ export const getAllCourses = TryCatch(async (req, res) => {
   });
 
   export const fetchLectures = TryCatch(async (req, res) => {
-    const lectures = await Lecture.find({ course: req.params.id });
+    const lectures = await Lecture.find({ course: req.params.id }); 
   
     const user = await User.findById(req.user._id);
   
     if (user.role === "admin") {
       return res.json({ lectures }); 
-    }
+    }  
   
     if (!user.subscription.includes(req.params.id)) 
       return res.status(400).json({
@@ -41,17 +42,18 @@ export const getAllCourses = TryCatch(async (req, res) => {
 
 
   export const fetchLecture = TryCatch(async (req, res) => {
+    // console.log(req.params.id);
     const lecture = await Lecture.findById(req.params.id);
   
     const user = await User.findById(req.user._id);
   
     if (user.role === "admin") {
-      return res.json({ lecture });
+      return res.json({ lecture });   
     }
   
     if (!user.subscription.includes(lecture.course))
-      return res.status(400).json({
-        message: "You have not subscribed to this course",
+      return res.status(400).json({ 
+        message: "hy You have not subscribed to this course",
       });
   
     res.json({ lecture });
@@ -69,7 +71,7 @@ export const getAllCourses = TryCatch(async (req, res) => {
   
   export const checkout = TryCatch(async (req, res) => {
     const user = await User.findById(req.user._id);
-  
+
     const course = await Courses.findById(req.params.id);
   
     if (user.subscription.includes(course._id)) {
@@ -79,13 +81,13 @@ export const getAllCourses = TryCatch(async (req, res) => {
     }
   
     const options = {
-      amount: Number(course.price * 100),
+      amount: Number(course.price * 100),  
       currency: "INR",
     };
-  
+
     const order = await instance.orders.create(options);
   
-    res.status(201).json({
+    res.status(201).json({ 
       order,
       course,
     });

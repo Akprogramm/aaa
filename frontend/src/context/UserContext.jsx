@@ -5,7 +5,7 @@ import toast, { Toaster } from "react-hot-toast";
 
  const UserContext = createContext();
 
-export const UserContextProvider = ({ children }) => {
+export const UserContextProvider = ({ children }) => {   
   
   const [user, setUser] = useState([]);
   const [isAuth, setIsAuth] = useState(false);
@@ -31,6 +31,25 @@ export const UserContextProvider = ({ children }) => {
     }
   }
 
+  async function verifyOtp(otp, navigate) {
+    setBtnLoading(true);
+    const activationToken = localStorage.getItem("activationToken");
+    try {
+      const { data } = await axios.post(`${server}/api/user/verify`, {
+        otp,
+        activationToken,
+      });
+
+      toast.success(data.message);
+      navigate("/login");
+      localStorage.clear();
+      setBtnLoading(false);
+    } catch (error) {
+      toast.error(error.response.data.message);
+      setBtnLoading(false);
+    }
+  }
+
   async function loginUser(email, password, navigate, fetchMyCourse) {
     setBtnLoading(true);
     try {
@@ -43,8 +62,9 @@ export const UserContextProvider = ({ children }) => {
       localStorage.setItem("token", data.token); 
       setUser(data.user);
       setIsAuth(true);
-      setBtnLoading(false);
+      setBtnLoading(false); 
       navigate("/");
+      // window.location.reload();
       fetchMyCourse();
     } catch (error) {
       setBtnLoading(false);
@@ -54,16 +74,42 @@ export const UserContextProvider = ({ children }) => {
   }
 
 
+  async function fetchUser() {
+    try { 
+      const  { data }  = await axios.get(`${server}/api/user/me`, {
+        headers: {
+          token: localStorage.getItem("token"), 
+        },
+      });
+
+      setIsAuth(true);
+      setUser(data.user);
+      setLoading(false);
+    } catch (error) { 
+      console.log("error: ",error);
+      setLoading(false);
+    }
+
+  }
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+
   return (
-    <UserContext.Provider value={{ user,
+    <UserContext.Provider value={{ 
+      user,
       setUser,
       setIsAuth,
-      isAuth,
+      isAuth, 
       registerUser,
+      verifyOtp,
+      fetchUser,
       loginUser,
       btnLoading,
       loading}}>
-      {children}
+      {children} 
       <Toaster />
     </UserContext.Provider>
   );

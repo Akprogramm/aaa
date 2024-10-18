@@ -13,7 +13,7 @@ const Header = ({ isAuth }) => {
         <Link to={"/about"}>About</Link>
         {isAuth ? (       
           <Link to={"/account"}>Account</Link>
-        ) : (
+        ) : (                                                    
           <Link to={"/login"}>Login</Link>
         )}
       </div> 

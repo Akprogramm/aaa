@@ -19,7 +19,7 @@ app.use(cors());
 
 import userRoutes from "./routes/user.js";
 import courseRoutes from "./routes/course.js";
-import adminRoutes from "./routes/admin.js";
+import adminRoutes from "./routes/admin.js"; 
 
 app.use("/uploads", express.static("uploads")); 
 app.use("/api", userRoutes);

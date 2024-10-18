@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import sendMail from "../middlewares/sendMail.js"; 
 import TryCatch from "../middlewares/TryCatch.js"; 
 
-export const register = TryCatch(async (req, res) => {
+export const register = TryCatch(async (req, res) => {               
     const { email, name, password } = req.body;
   
     let user = await User.findOne({ email });
@@ -23,7 +23,7 @@ export const register = TryCatch(async (req, res) => {
     };
   
     const otp = Math.floor(Math.random() * 1000000);
-  
+
     const activationToken = jwt.sign(
       {
         user,
@@ -52,7 +52,6 @@ export const register = TryCatch(async (req, res) => {
     const { otp, activationToken } = req.body; 
   
     const verify = jwt.verify(activationToken, process.env.Activation_Secret);
-    console.log("verify: ",verify); 
    
     if (!verify)
       return res.status(400).json({
@@ -101,10 +100,10 @@ export const register = TryCatch(async (req, res) => {
       token,
       user,
     }); 
-  });
+  }); 
 
 
   export const myProfile = TryCatch(async (req, res) => {
-    const user = await User.findById(req._id);
+    const user = await User.findById(req.user._id);
     res.json({ user });
   })

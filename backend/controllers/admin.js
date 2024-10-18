@@ -23,7 +23,7 @@ export const createCourse = TryCatch(async (req, res) => {
   });
 
   res.status(201).json({
-    message: "Course Created Successfully",
+    message: "Course Created Successfully",  
   });
 });
 
@@ -72,9 +72,9 @@ export const deleteCourse = TryCatch(async (req, res) => {
 
   const lectures = await Lecture.find({ course: course._id });
 
-  await Promise.all(
+  await Promise.all( 
     lectures.map(async (lecture) => {
-      await unlinkAsync(lecture.video);
+      await unlinkAsync(lecture.video); 
       console.log("video deleted"); 
     })
   );
@@ -108,4 +108,40 @@ export const getAllStats = TryCatch(async (req, res) => {
   res.json({
     stats,
   });
+});
+
+
+export const getAllUser = TryCatch(async (req, res) => {
+  const users = await User.find({ _id: { $ne: req.user._id } }).select(
+    "-password" 
+  );
+
+  res.json({ users });         
+});
+
+
+export const updateRole = TryCatch(async (req, res) => {
+  if (req.user.mainrole !== "superadmin")
+    return res.status(403).json({
+      message: "This endpoint is assign to superadmin",
+    });
+  const user = await User.findById(req.params.id); 
+
+  if (user.role === "user") {
+    user.role = "admin";
+    await user.save();
+
+    return res.status(200).json({
+      message: "Role updated to admin",
+    });
+  }
+
+  if (user.role === "admin") {       
+    user.role = "user";
+    await user.save();
+
+    return res.status(200).json({
+      message: "Role updated",
+    });
+  }
 });
