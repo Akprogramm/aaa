@@ -45,7 +45,7 @@ const CourseDescription = ({ user }) => {
       name: "Skill-Academy", //your business name
       description: "Learn with us", 
       order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-
+      
       handler: async function (response) {
         const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
           response;

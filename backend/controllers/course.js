@@ -7,6 +7,7 @@ import crypto from "crypto";
 import { Payment } from "../models/Payment.js";
 import { instance } from "../index.js";
 
+
 export const getAllCourses = TryCatch(async (req, res) => {
     const courses = await Courses.find(); 
     res.json({ 
@@ -19,7 +20,7 @@ export const getAllCourses = TryCatch(async (req, res) => {
   
     res.json({
       course,
-    });
+    }); 
   });
 
   export const fetchLectures = TryCatch(async (req, res) => {
@@ -116,7 +117,7 @@ export const getAllCourses = TryCatch(async (req, res) => {
   
       const user = await User.findById(req.user._id);
       
-      const course = await Courses.findById(req.params.id);
+      const course = await Courses.findById(req.params.id);   
   
       user.subscription.push(course._id);
   

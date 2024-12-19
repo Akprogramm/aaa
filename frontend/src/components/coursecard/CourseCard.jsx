@@ -5,6 +5,7 @@ import { server } from "../../main";
 import { UserData } from "../../context/UserContext";
 import { CourseData } from "../../context/CourseContext";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 const CourseCard = ({ course }) => {
 
@@ -13,9 +14,9 @@ const CourseCard = ({ course }) => {
   const { user, isAuth } = UserData();
 
   const { fetchCourses } = CourseData(); 
-  
+   
   const deleteHandler = async (id) => {
-    console.log("ide: ",id);
+    console.log("run");
     if (confirm("Are you sure you want to delete this course")) {
       try {
         const { data } = await axios.delete(`${server}/api/course/${id}`, {
@@ -24,12 +25,11 @@ const CourseCard = ({ course }) => {
           },
         });
 
-        console.log("data: ",data);
-
-        toast.success(data.message); 
+        toast.success(data.message);
         fetchCourses();
       } catch (error) {
-        toast.error(error.response.data.message);
+        console.log("error: ",error);
+        toast.error(error.response); 
       }
     }
   };
@@ -92,4 +92,4 @@ const CourseCard = ({ course }) => {
   );
 };
 
-export default CourseCard;
+export default CourseCard; 

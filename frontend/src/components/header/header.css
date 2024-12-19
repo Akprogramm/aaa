@@ -2,20 +2,22 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    background-color: #fff;
+    padding: 20px;  
+    /* background-color: #8a4baf; */
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     position: relative;
   
     .logo {
       font-size: 25px;
       font-weight: 600;
+      /* color: #8a4baf; */
       color: #8a4baf;
   
-      @media (max-width: 768px) {
+      /* @media (max-width: 768px) {
         font-size: 18px;
-      }
+      } */
     }
+
   
     .link {
       display: flex;
@@ -33,6 +35,46 @@ header {
         &:hover {
           color: #8a4baf;
         }
+      }
+    }
+  }
+
+  .postt{
+    /* position: absolute;
+    right: 50%; 
+    top: 20%; */
+    color: #8a4baf;
+    font: bold;
+    /* color: rgb(231, 231, 231);
+    font-size: large; */
+    cursor: pointer;
+
+    img{
+      opacity: 1;
+      height: 20px;
+      animation: akk 0.3s infinite;
+    }
+  }
+
+  @keyframes akk {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+
+  @media screen and (max-Width: 450px){
+    header {
+      font-size: small;
+
+      .logo{
+        font-size: smaller;
       }
     }
   }

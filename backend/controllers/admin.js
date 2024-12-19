@@ -53,48 +53,39 @@ export const addLectures = TryCatch(async (req, res) => {
   });
 });
 
+
 export const deleteLecture = TryCatch(async (req, res) => {
   const lecture = await Lecture.findById(req.params.id);
-
   rm(lecture.video, () => {
     console.log("Video deleted");
   });
-
   await lecture.deleteOne();
-
-  res.json({ message: "Lecture Deleted" });
+  res.json({ message: "Lecture Deleted" }); 
 });
 
 const unlinkAsync = promisify(fs.unlink);
 
 export const deleteCourse = TryCatch(async (req, res) => { 
   const course = await Courses.findById(req.params.id);
-
   const lectures = await Lecture.find({ course: course._id });
-
-  await Promise.all( 
+  await Promise.all(
     lectures.map(async (lecture) => {
-      await unlinkAsync(lecture.video); 
+      await unlinkAsync(lecture.video);
       console.log("video deleted"); 
     })
   );
-
   rm(course.image, () => {
     console.log("image deleted");
   });
-
   await Lecture.find({ course: req.params.id }).deleteMany();
-
   await course.deleteOne();
-
   await User.updateMany({}, { $pull: { subscription: req.params.id } });
-
   res.json({
-    message: "Course Deleted", 
+    message: "Course Deleted",  
   });
 });
 
-export const getAllStats = TryCatch(async (req, res) => {
+export const getAllStats = TryCatch(async (req, res) => { 
   const totalCoures = (await Courses.find()).length;
   const totalLectures = (await Lecture.find()).length;
   const totalUsers = (await User.find()).length;
@@ -116,16 +107,16 @@ export const getAllUser = TryCatch(async (req, res) => {
     "-password" 
   );
 
-  res.json({ users });         
+  res.json({ users });               
 });
 
 
 export const updateRole = TryCatch(async (req, res) => {
-  if (req.user.mainrole !== "superadmin")
+  if (req.user.role !== "admin")
     return res.status(403).json({
       message: "This endpoint is assign to superadmin",
-    });
-  const user = await User.findById(req.params.id); 
+    }); 
+  const user = await User.findById(req.params.id);
 
   if (user.role === "user") {
     user.role = "admin";
@@ -144,4 +135,4 @@ export const updateRole = TryCatch(async (req, res) => {
       message: "Role updated",
     });
   }
-});
+}); 

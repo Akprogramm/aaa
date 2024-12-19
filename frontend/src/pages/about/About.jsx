@@ -11,6 +11,8 @@ const About = () => {
           individuals learn and grow in their desired fields. Our experienced
           instruction ensure that each course is tailored for effective learning
           and practical application.
+          <br />
+         <strong> Contact us: 9131396014 </strong>
         </p>
       </div>
     </div>

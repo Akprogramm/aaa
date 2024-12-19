@@ -40,7 +40,7 @@ export const UserContextProvider = ({ children }) => {
         activationToken,
       });
 
-      toast.success(data.message);
+      toast.success(data.message); 
       navigate("/login");
       localStorage.clear();
       setBtnLoading(false);

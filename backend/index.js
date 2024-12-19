@@ -8,7 +8,7 @@ dotenv.config();
 
 export const instance = new Razorpay({
   key_id: process.env.Razorpay_Key,
-  key_secret: process.env.Razorpay_Secret,
+  key_secret: process.env.Razorpay_Secret,       
 });
 
 const app = express();
@@ -24,14 +24,14 @@ import adminRoutes from "./routes/admin.js";
 app.use("/uploads", express.static("uploads")); 
 app.use("/api", userRoutes);
 app.use("/api", courseRoutes);
-app.use("/api", adminRoutes); 
+app.use("/api", adminRoutes);   
 
 app.get("/", (req, res) => {
-  res.send("Server is working");
+  res.send("Server is working"); 
 }); 
 
 
 app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+  console.log(`Server is running on http://localhost:${port}`);    
   connectDb();
-});
+}); 

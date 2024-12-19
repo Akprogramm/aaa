@@ -7,7 +7,7 @@ export const isAuth = async (req, res, next) => {
     if (!token)
       return res.status(403).json({ 
         message: "Please Login",
-      });
+      }); 
       
     const decodedData = jwt.verify(token, process.env.Jwt_Sec);  
 
@@ -32,7 +32,7 @@ export const isAdmin = (req, res, next) => {
     next();
   } catch (error) {
     res.status(500).json({
-      message: error.message,
+      message: error.message, 
     });
   }
 }; 

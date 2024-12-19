@@ -81,7 +81,7 @@ const AdminUsers = ({ user }) => {
                   <td>
                     <button
                       onClick={() => updateRole(e._id)}
-                      className="common-btn"
+                      className="common-btn lasts"
                     >
                       Update Role
                     </button>

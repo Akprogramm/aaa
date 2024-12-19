@@ -4,6 +4,7 @@ import { MdDashboard } from "react-icons/md";
 import { IoMdLogOut } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { UserData } from "../../context/UserContext";
+import toast from "react-hot-toast";
 
 const Account = ({user}) => {
 

@@ -41,7 +41,7 @@ export const CourseContextProvider = ({ children }) => {
       } catch (error) {
         console.log(error);
       }
-    } 
+    }  
 
     useEffect(() => {  
         fetchCourses();

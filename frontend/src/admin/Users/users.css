@@ -1,8 +1,17 @@
 .users {
-    width: 350px;
     overflow-x: auto;
-    white-space: nowrap;
+    white-space: wrap;
     margin: 20px auto;
     min-height: 80vh;
-    border: solid gray 1px;
+
+    @media screen and (max-width: 400px) {
+        font-size: 3vw;
+
+        .lasts{
+            font-size: 3vw;
+            padding: 10px;
+        }
+
+    }
+
   }
